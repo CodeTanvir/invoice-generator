@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Flappy Fashion Invoice Generator</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- LEFT PANEL -->
+      <div class="panel">
+        <h2>Invoice Details</h2>
+        <label>Order Number</label>
+        <input id="ordNum" placeholder="x123" />
+        <label>Customer Name</label>
+        <input id="custName" placeholder="Mst Taniya Akther" />
+        <label>Phone Number</label>
+        <input id="custPhone" placeholder="01311061391" />
+        <label>Address</label>
+        <textarea
+          id="custAddress"
+          placeholder="311 west kandapara Narsingdi 1600"
+        ></textarea>
+
+        <h3>Items</h3>
+        <div id="itemsListContainer"></div>
+
+        <button type="button" class="btn btn-add" onclick="openModal()">
+          + Add Item
+        </button>
+
+        <h3>Summary</h3>
+        <div id="summaryContainer">
+          <div class="summary-row-input">
+            <label>Advance (TK)</label>
+            <input id="advance" type="number" value="0" min="0" />
+          </div>
+          <div class="summary-row-input">
+            <label>Delivery Charge (TK)</label>
+            <input id="delivery" type="number" value="120" min="0" />
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-generate" onclick="downloadPDF()">
+          Download PDF
+        </button>
+      </div>
+
+      <!-- RIGHT PANEL (Invoice Preview) -->
+      <div class="panel" id="invoiceWrapper">
+        <div id="invoice"></div>
+      </div>
+    </div>
+
+    <!-- MODAL -->
+    <!-- HTML -->
+    <!-- HTML -->
+    <div id="itemModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">×</span>
+        <h2>Add Item</h2>
+
+        <div class="modal-input-group">
+          <label for="modalProductName">Product Name</label>
+          <input id="modalProductName" placeholder="Product Name" />
+        </div>
+
+        <div class="modal-input-group">
+          <label for="modalPrice">Price (TK)</label>
+          <input id="modalPrice" type="number" value="0" min="0" step="1" />
+        </div>
+
+        <div class="modal-input-group">
+          <label for="modalQty">Quantity</label>
+          <input id="modalQty" type="number" value="1" min="1" step="1" />
+        </div>
+
+        <button class="btn btn-generate" onclick="addItemFromModal()">
+          Add to Invoice
+        </button>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
