@@ -8,7 +8,7 @@
   </head>
   <body>
     <div class="container">
-      <!-- LEFT PANEL -->
+      <!-- LEFT PANEL: Inputs -->
       <div class="panel">
         <h2>Invoice Details</h2>
         <label>Order Number</label>
@@ -25,10 +25,7 @@
 
         <h3>Items</h3>
         <div id="itemsListContainer"></div>
-
-        <button type="button" class="btn btn-add" onclick="openModal()">
-          + Add Item
-        </button>
+        <button class="btn btn-add" onclick="openModal()">+ Add Item</button>
 
         <h3>Summary</h3>
         <div id="summaryContainer">
@@ -42,20 +39,41 @@
           </div>
         </div>
 
-        <button type="button" class="btn btn-generate" onclick="downloadPDF()">
+        <button class="btn btn-generate" onclick="downloadPDF()">
           Download PDF
         </button>
       </div>
 
-      <!-- RIGHT PANEL (Invoice Preview) -->
+      <!-- RIGHT PANEL: Invoice Preview -->
       <div class="panel" id="invoiceWrapper">
         <div id="invoice"></div>
       </div>
     </div>
 
     <!-- MODAL -->
-    <!-- HTML -->
-    <!-- HTML -->
+    <div id="itemModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">×</span>
+        <h2>Add Item</h2>
+        <div class="modal-input-group">
+          <label for="modalProductName">Product Name</label>
+          <input id="modalProductName" placeholder="Product Name" />
+        </div>
+        <div class="modal-input-group">
+          <label for="modalPrice">Price (TK)</label>
+          <input id="modalPrice" type="number" value="0" min="0" step="1" />
+        </div>
+        <div class="modal-input-group">
+          <label for="modalQty">Quantity</label>
+          <input id="modalQty" type="number" value="1" min="1" step="1" />
+        </div>
+        <button class="btn btn-generate" onclick="addItemFromModal()">
+          Add to Invoice
+        </button>
+      </div>
+    </div>
+
+    <!-- MODAL -->
     <div id="itemModal" class="modal">
       <div class="modal-content">
         <span class="close" onclick="closeModal()">×</span>
@@ -81,6 +99,7 @@
         </button>
       </div>
     </div>
+
     <script src="script.js"></script>
   </body>
 </html>
