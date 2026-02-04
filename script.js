@@ -174,7 +174,7 @@ updateInvoice();
 // PDF download
 function downloadPDF() {
   updateInvoice();
-
+const data = collectData()
   const element = document.getElementById('invoice');
 
   html2pdf()
@@ -182,7 +182,7 @@ function downloadPDF() {
     .set({
       margin:      [15, 10, 15, 10], 
       padding: [5],  // top, right, bottom, left – more bottom space
-      filename:    'invoice.pdf',
+      filename:    `${data.custName}`,
       image:       { type: 'jpeg', quality: 0.98 },
       html2canvas: { 
         scale: 2.0,                    // higher = sharper, but bigger file
