@@ -125,7 +125,7 @@ textarea {
 }
 
 #itemsListContainer table,
-#invoice table {
+.invoice table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
@@ -160,7 +160,7 @@ textarea {
   display: none; /* Chrome/Safari */
 }
 
-#invoice {
+.invoice {
   background: #ffffff;
   padding: 16px;
   border-radius: 8px;
@@ -196,15 +196,15 @@ textarea {
 
 #itemsListContainer th,
 #itemsListContainer td,
-#invoice th,
-#invoice td {
+.invoice th,
+.invoice td {
   border: 1px solid #ddd;
   padding: 8px 10px;
   text-align: center;
 }
 
 #itemsListContainer th,
-#invoice th {
+.invoice th {
   background: #f3f3f3;
   font-weight: 600;
 }
