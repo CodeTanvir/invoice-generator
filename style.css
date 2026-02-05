@@ -8,17 +8,17 @@ body {
   color: #333;
   height: 100%;
 }
-
 .container {
-  max-width: 1200px;
-  margin: auto;
   display: flex;
-  gap: 20px;
-  flex-wrap: nowrap;
+  gap: 20px; /* consistent gap */
   align-items: flex-start;
-  padding-right: 560px; /* invoice width + gap */
+  flex-wrap: nowrap; /* keep side-by-side */
+  max-width: 100%;
+  margin: auto;
+  padding: 0 20px; /* small padding for edges */
   box-sizing: border-box;
 }
+
 .invoice-header {
   display: flex;
   align-items: center;
@@ -50,15 +50,15 @@ body {
   margin: 0;
 }
 .panel {
+  flex: 1 1 calc(60% - 10px); /* panel takes ~60% minus half gap */
+  min-width: 300px; /* never shrink too small */
   background: #ffffffc1;
   padding: 25px 35px;
   border-radius: 12px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 15px;
-  min-width: 400px;
 }
 
 h1,
@@ -132,17 +132,17 @@ textarea {
   font-size: 14px;
 }
 #invoiceWrapper {
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100dvh; /* modern viewport */
-  width: 700px;
+  flex: 0 0 calc(50% - 10px); /* invoice takes remaining width minus half gap */
+  min-width: 400px; /* minimum invoice width */
+  max-width: 700px; /* maximum invoice width */
+  height: 100vh;
   background: #100c0c7a;
-
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* z-index: 2; */
+  box-sizing: border-box;
+  position: sticky;
+  top: 0; /* stay visible while scrolling */
 }
 
 #invoiceScroll {
@@ -319,8 +319,27 @@ textarea {
 @media (max-width: 900px) {
   .container {
     flex-direction: column;
+    padding-right: 0; /* remove extra space */
   }
-  .panel {
-    min-width: 100%;
+
+  #invoiceWrapper {
+    position: relative; /* no longer fixed */
+    width: 100%; /* full width */
+    height: auto; /* adjust height automatically */
+    background: transparent; /* optional for clean look */
+    margin-top: 20px; /* space between panel and invoice */
+    padding: 0;
+    box-shadow: none;
+  }
+
+  #invoiceScroll {
+    max-height: none; /* allow invoice to expand naturally */
+    overflow: visible;
+    padding-bottom: 20px;
+  }
+  .panel,
+  #invoiceWrapper {
+    width: 100%;
+    min-width: auto;
   }
 }

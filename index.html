@@ -11,21 +11,20 @@
       <!-- LEFT PANEL: Inputs -->
       <div class="panel">
         <h2>Invoice Details</h2>
-        <!-- <label>Order Number</label>
-        <input id="ordNum" placeholder="x123" /> -->
         <div style="display: flex; gap: 2rem">
           <div>
             <label>Customer Name</label>
-            <input id="custName" placeholder="Mst Taniya Akther" />
+            <input id="custName" required placeholder="Mst Taniya Akther" />
           </div>
           <div>
             <label>Phone Number</label>
-            <input id="custPhone" placeholder="01311061391" />
+            <input id="custPhone" required placeholder="01311061391" />
           </div>
         </div>
         <label>Address</label>
         <textarea
           id="custAddress"
+          required
           placeholder="311 west kandapara Narsingdi 1600"
         ></textarea>
         <div style="display: flex; gap: 2rem">
@@ -50,9 +49,8 @@
             <!-- LONG INVOICE CONTENT HERE -->
           </div>
         </div>
-
         <div class="invoice-actions">
-          <button class="btn btn-generate">Print</button>
+          <button class="btn btn-generate" onclick="savePDF()">Save Pdf</button>
           <button class="btn btn-add" onclick="downloadPDF()">
             Download PDF
           </button>
@@ -61,27 +59,22 @@
     </div>
 
     <!-- MODAL -->
-    <!-- MODAL -->
     <div id="itemModal" class="modal" onclick="closeModal()">
       <div class="modal-content" onclick="event.stopPropagation()">
         <span class="close" onclick="closeModal()">×</span>
         <h2>Add Item</h2>
-
         <div class="modal-input-group">
           <label>Product Name</label>
           <input id="modalProductName" placeholder="Product Name" />
         </div>
-
         <div class="modal-input-group">
           <label>Price (TK)</label>
           <input id="modalPrice" type="number" value="0" min="0" />
         </div>
-
         <div class="modal-input-group">
           <label>Quantity</label>
           <input id="modalQty" type="number" value="1" min="1" />
         </div>
-
         <button
           id="modalSubmitBtn"
           class="btn btn-generate"

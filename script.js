@@ -144,7 +144,11 @@ function collectData() {
     items
   };
 }
-
+function savePDF(){
+  const data = collectData();
+  console.log(data)
+  localStorage.setItem('pdfData', JSON.stringify(data))
+}
 function updateInvoice() {
   const data = collectData();
 
