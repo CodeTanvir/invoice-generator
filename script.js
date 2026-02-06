@@ -1,6 +1,52 @@
 let items = [];
 let editIndex = null;
 
+function showToast(msg, ok = true) {
+  const t = document.createElement('div');
+  t.textContent = msg;
+
+  t.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 18px 26px;
+    background: ${ok ? '#2ecc71' : '#e74c3c'};
+    color: #fff;
+    border-radius: 8px;
+    z-index: 9999;
+
+    max-width: 90vw;
+    text-align: center;
+    font-size: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.25);
+
+    opacity: 0;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  `;
+
+  document.body.appendChild(t);
+
+  // trigger animation
+  requestAnimationFrame(() => {
+    t.style.opacity = '1';
+    t.style.transform = 'translate(-50%, -50%) scale(1)';
+  });
+
+  // exit animation
+  setTimeout(() => {
+    t.style.opacity = '0';
+    t.style.transform = 'translate(-50%, -50%) scale(0.9)';
+    setTimeout(() => t.remove(), 350);
+  }, 3000);
+}
+
+
+
 /* ================= MODAL CONTROL ================= */
 
 function openModal() {
@@ -148,12 +194,34 @@ function collectData() {
     items
   };
 }
-function savePDF(){
-  
-  const data = collectData();
-  console.log(data)
-  localStorage.setItem('pdfData', JSON.stringify(data))
+
+
+
+function savePDF() {
+  try {
+    const data = collectData();
+
+    // get existing pdf book or empty array
+    const all = JSON.parse(localStorage.getItem('pdfBook')) || [];
+
+    // push new data at FIRST position
+    all.unshift(data);
+
+    // save back to localStorage
+    localStorage.setItem('pdfBook', JSON.stringify(all));
+    
+showToast('Invoice saved successfully');
+ setTimeout(()=>{
+       window.location.reload()
+    },3000)
+  } catch (err) {
+    console.error(err);
+     showToast('Failed to save invoice', false);
+  }
 }
+
+
+
 function updateInvoice() {
   const data = collectData();
 
@@ -254,9 +322,13 @@ updateInvoice();
 /* ================= PDF ================= */
 
 function downloadPDF() {
+  const savedData = JSON.parse(localStorage.getItem('pdfBook'));
+  console.log(savedData)
+  if(savedData){
   updateInvoice();
   const data = collectData();
-  const element = document.getElementById('invoice');
+  const element = document.getElementById('invoiceHistory');
+
 
   html2pdf().from(element).set({
     margin: [15, 10, 15, 10],
@@ -264,12 +336,22 @@ function downloadPDF() {
     image: { type: 'jpeg', quality: 0.98 },
     html2canvas: { scale: 2, useCORS: true },
     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-  }).save();
+  }).save().then(()=>{
+    localStorage.removeItem('pdfBook');
+    showToast('Pdf downloaded successfull',)
+    setTimeout(()=>{
+       window.location.reload()
+    },3000)
+   
+  })
+}else{
+  showToast('No saved Invoices to Download')
+}
 }
 
 
-function allInvoices() {
-  const data = JSON.parse(localStorage.getItem('pdfData') || null);
+function allInvoices(data) {
+ 
   if (!data) return;
 
   let rows = '';
@@ -298,10 +380,11 @@ function allInvoices() {
   // Create a preview div for previous invoice
   const previewDiv = document.createElement('div');
   previewDiv.classList.add('invoice-preview');
-  previewDiv.style.border = '1px solid #ccc';
+  // previewDiv.style.border = '1px solid #ccc';
   previewDiv.style.padding = '10px';
   previewDiv.style.marginTop = '15px';
   previewDiv.style.background = '#fdfdfd';
+  
 
   previewDiv.innerHTML = `
     <div class="invoice-container">
@@ -310,7 +393,7 @@ function allInvoices() {
           <img src="image/logo.png" class="logo" onerror="this.style.display='none'">
         </div>
         <div class="invoice-meta">
-          <h1 class="invoice-title">Invoice (Previous)</h1>
+          <h1 class="invoice-title">Invoice</h1>
           <div class="date-row">
             Date: ${new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })}
           </div>
@@ -365,4 +448,22 @@ function allInvoices() {
   // Append preview below the main invoice
   document.getElementById('invoiceHistory').appendChild(previewDiv);
 }
-allInvoices()
+
+const Alldata = JSON.parse(localStorage.getItem('pdfBook') || '[]');
+
+
+function callInvoices(){
+  Alldata?.forEach((data)=>{
+  allInvoices(data)
+})
+}
+const invoiceHistoryEl = document.getElementById('invoiceHistory');
+if (Alldata.length > 0) {
+  invoiceHistoryEl.style.display = 'block';
+  callInvoices();
+} else {
+  invoiceHistoryEl.style.display = 'none';
+}
+
+
+

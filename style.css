@@ -170,9 +170,17 @@ textarea {
   box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.08),
     0 6px 20px rgba(0, 0, 0, 0.06);
+}
+.invoice-preview {
+  page-break-after: always;
+  break-after: page;
   border: 5px solid #6cb7035b;
 }
 
+/* last one should not add extra blank page */
+.invoice-preview:last-child {
+  page-break-after: auto;
+}
 .invoice-actions {
   position: sticky;
   bottom: 0;
