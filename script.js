@@ -195,9 +195,37 @@ function collectData() {
   };
 }
 
+function isInvoiceValid() {
+  const custName = document.getElementById('custName').value.trim();
+  const custPhone = document.getElementById('custPhone').value.trim();
+  const custAddress = document.getElementById('custAddress').value.trim();
+
+  if (!custName) {
+    showToast('Customer name is required', false);
+    return false;
+  }
+
+  if (!custPhone) {
+    showToast('Phone number is required', false);
+    return false;
+  }
+
+  if (!custAddress) {
+    showToast('Address is required', false);
+    return false;
+  }
+
+  if (items.length === 0) {
+    showToast('Please add at least one item', false);
+    return false;
+  }
+
+  return true;
+}
 
 
 function savePDF() {
+  if(!isInvoiceValid()) return;
   try {
     const data = collectData();
 
@@ -332,7 +360,7 @@ function downloadPDF() {
 
   html2pdf().from(element).set({
     margin: [15, 10, 15, 10],
-    filename: data.custName,
+    filename: Date.now(),
     image: { type: 'jpeg', quality: 0.98 },
     html2canvas: { scale: 2, useCORS: true },
     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
@@ -450,6 +478,25 @@ function allInvoices(data) {
 }
 
 const Alldata = JSON.parse(localStorage.getItem('pdfBook') || '[]');
+
+const savedNumber = document.createElement('div');
+savedNumber.textContent = `Total Invoice / ${Alldata.length}`;
+
+savedNumber.style.cssText = `
+  position: fixed;
+  top: 5%;
+  right: 2%;
+  transform: translateY(-50%);
+  background: #111;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 9999;
+`;
+
+document.body.appendChild(savedNumber);
 
 
 function callInvoices(){
