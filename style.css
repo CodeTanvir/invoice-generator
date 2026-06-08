@@ -2,22 +2,66 @@
 
 body {
   font-family: "Inter", sans-serif;
-  background: #f5f6fa;
-  margin: 0;
-  /* padding: 20px; */
-  color: #333;
-  height: 100%;
-}
 
+  background:
+    radial-gradient(circle at top left, #dbeafe 0%, transparent 40%),
+    radial-gradient(circle at top right, #ede9fe 0%, transparent 40%),
+    radial-gradient(circle at bottom, #dcfce7 0%, transparent 40%),
+    linear-gradient(135deg, #f8fafc, #eef2ff);
+
+  min-height: 100vh;
+}
 /* Search Bar Styles */
 .search-section {
   margin-bottom: 25px;
 }
 
 .search-container {
+  --border-width: 2px;
+
   position: relative;
   display: flex;
+  justify-content: center;
   align-items: center;
+  /* width: 300px; */
+
+  font-family: Lato, sans-serif;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  color: white;
+
+  border-radius: 10px;
+
+  &::after {
+    position: absolute;
+    content: "";
+    top: calc(-1 * var(--border-width));
+    left: calc(-1 * var(--border-width));
+    z-index: -1;
+    width: calc(100% + var(--border-width) * 2);
+    height: calc(100% + var(--border-width) * 2);
+    background: linear-gradient(
+      60deg,
+      hsl(224, 85%, 66%),
+      hsl(269, 85%, 66%),
+      hsl(314, 85%, 66%),
+      hsl(359, 85%, 66%),
+      hsl(44, 85%, 66%),
+      hsl(89, 85%, 66%),
+      hsl(134, 85%, 66%),
+      hsl(179, 85%, 66%)
+    );
+    background-size: 300% 300%;
+    background-position: 0 50%;
+    border-radius: 10px;
+    animation: moveGradient 4s alternate infinite;
+  }
+}
+
+@keyframes moveGradient {
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .search-icon {
@@ -59,6 +103,7 @@ body {
   border-radius: 6px;
   background: #f9f9f9;
   min-height: 0;
+  display: none;
 }
 
 .search-results strong {
@@ -106,13 +151,17 @@ body {
   display: block;
   margin: 0;
 }
+
 .panel {
-  flex: 1 1 calc(60% - 10px); /* panel takes ~60% minus half gap */
-  min-width: 300px; /* never shrink too small */
-  background: #ffffffc1;
+  flex: 1 1 calc(60% - 10px);
+  min-width: 300px;
+  background: rgba(255, 255, 255, 0.15); /* frosted glass */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 25px 35px;
-  border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -194,20 +243,28 @@ textarea {
   margin-top: 10px;
   font-size: 14px;
 }
+/* Glassmorphism for the invoice panel */
 #invoiceWrapper {
-  flex: 0 0 calc(50% - 10px); /* invoice takes remaining width minus half gap */
-  min-width: 400px; /* minimum invoice width */
-  max-width: 700px; /* maximum invoice width */
-  height: 100vh;
-  background: #100c0c7a;
+  flex: 0 0 calc(50% - 10px); /* keep original width */
+  min-width: 400px;
+  max-width: 700px;
+  height: 100vh; /* full height */
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-sizing: border-box;
-  position: sticky;
-  top: 0; /* stay visible while scrolling */
-}
+  position: sticky; /* stays on the right */
+  top: 0;
 
+  /* GLASS EFFECT */
+  background: rgba(255, 255, 255, 0.15); /* semi-transparent */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow:
+    0 8px 32px rgba(31, 38, 135, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
+}
 #invoiceScroll {
   flex: 1;
   width: 100%;

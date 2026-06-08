@@ -614,6 +614,7 @@ function searchInvoices(query) {
   });
   
   if (matchingIndices.length === 0) {
+    searchResultsEl.style.display = "block"
     searchResultsEl.textContent = 'No invoices found';
     searchResultsEl.style.color = '#999';
   } else {
