@@ -10,6 +10,29 @@
     <div class="container">
       <!-- LEFT PANEL: Inputs -->
       <div class="panel">
+        <div class="brand-row">
+          <label for="brandSelect">Brand</label>
+          <div class="brand-toggle">
+            <input
+              type="radio"
+              id="brand-flappy"
+              name="brand"
+              value="flappy"
+              checked
+              onchange="setBrand(this.value)"
+            />
+            <label for="brand-flappy">Flappy</label>
+
+            <input
+              type="radio"
+              id="brand-flowbit"
+              name="brand"
+              value="flowbit"
+              onchange="setBrand(this.value)"
+            />
+            <label for="brand-flowbit">Flowbit</label>
+          </div>
+        </div>
         <h2>Invoice Details</h2>
         <div style="display: flex; gap: 2rem">
           <div>

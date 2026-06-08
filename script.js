@@ -1,6 +1,48 @@
 let items = [];
 let editIndex = null;
 
+// Branding options
+const brands = {
+  flappy: {
+    key: 'flappy',
+    name: 'Flappy Fashion',
+    address: 'ka/32/Bashundhara',
+    phone: '01765-763455',
+    email: 'flappy.a.t@gmail.com',
+    logo: 'image/flappy.png',
+    teamName: 'Team FLAPPY',
+    emoji: '🌸'
+  },
+  flowbit: {
+    key: 'flowbit',
+    name: 'Flowbit Tech',
+    address: 'ka/32/Bashundhara',
+    phone: '01765-763455',
+    email: 'flowbit35@gmail.com',
+    logo: 'image/flowbit.png',
+    teamName: 'Team FLOWBIT',
+    emoji: '✨'
+  }
+};
+
+let currentBrand = 'flappy';
+
+function setBrand(key) {
+  if (!brands[key]) return;
+  currentBrand = key;
+  // set radio input checked (if present)
+  const radio = document.querySelector(`input[name="brand"][value="${key}"]`);
+  if (radio) radio.checked = true;
+  updateInvoice();
+  // re-render saved previews if present
+  const invoiceHistoryEl = document.getElementById('invoiceHistory');
+  if (invoiceHistoryEl) {
+    invoiceHistoryEl.innerHTML = '';
+    const Alldata = JSON.parse(localStorage.getItem('pdfBook') || '[]');
+    Alldata.forEach(d => allInvoices(d));
+  }
+}
+
 function showToast(msg, ok = true) {
   const t = document.createElement('div');
   t.textContent = msg;
@@ -276,11 +318,13 @@ function updateInvoice() {
     `;
   }
 
+  const brand = brands[currentBrand] || brands.flappy;
+
   document.getElementById('invoice').innerHTML = `
     <div class="invoice-container">
       <div class="invoice-header">
         <div class="logo-area">
-          <img src="image/logo.png" class="logo" onerror="this.style.display='none'">
+          <img src="${brand.logo}" class="logo" onerror="this.style.display='none'">
         </div>
         <div class="invoice-meta">
           <h1 class="invoice-title">Invoice</h1>
@@ -299,10 +343,10 @@ function updateInvoice() {
         </div>
         <div class="from">
           <strong>From:</strong><br>
-          Flappy Fashion<br>
-          ka/32/Bashundhara<br>
-          01765-763455<br>
-          flappy.a.t@gmail.com
+          ${brand.name}<br>
+          ${brand.address}<br>
+          ${brand.phone}<br>
+          ${brand.email}
         </div>
       </div>
 
@@ -331,7 +375,7 @@ function updateInvoice() {
         <div class="grand"><strong>Amount Due:</strong> ${data.subTotal.toFixed(0)} TK</div>
       </div>
 
-      <div class="thank-you"> <strong>🌸 Thank You! 🌸</strong><br> We truly appreciate your support!<br> Stay connected for more exciting collections.<br> <strong>Team FLAPPY</strong> </div>
+      <div class="thank-you"> <strong>${brand.emoji} Thank You! ${brand.emoji}</strong><br> We truly appreciate your support!<br> Stay connected for more exciting collections.<br> <strong>${brand.teamName}</strong> </div>
     </div>
   `;
 }
@@ -345,7 +389,8 @@ function updateInvoice() {
   document.getElementById(id).addEventListener('input', updateInvoice);
 });
 
-updateInvoice();
+// Initialize brand select and invoice
+setBrand(currentBrand);
 
 /* ================= PDF ================= */
 
@@ -414,11 +459,13 @@ function allInvoices(data) {
   previewDiv.style.background = '#fdfdfd';
   
 
+  const brand = brands[currentBrand] || brands.flappy;
+
   previewDiv.innerHTML = `
     <div class="invoice-container">
       <div class="invoice-header">
         <div class="logo-area">
-          <img src="image/logo.png" class="logo" onerror="this.style.display='none'">
+          <img src="${brand.logo}" class="logo" onerror="this.style.display='none'">
         </div>
         <div class="invoice-meta">
           <h1 class="invoice-title">Invoice</h1>
@@ -437,10 +484,10 @@ function allInvoices(data) {
         </div>
         <div class="from">
           <strong>From:</strong><br>
-          Flappy Fashion<br>
-          ka/32/Bashundhara<br>
-          01765-763455<br>
-          flappy.a.t@gmail.com
+          ${brand.name}<br>
+          ${brand.address}<br>
+          ${brand.phone}<br>
+          ${brand.email}
         </div>
       </div>
 
@@ -469,7 +516,7 @@ function allInvoices(data) {
         <div class="grand"><strong>Amount Due:</strong> ${data.subTotal.toFixed(0)} TK</div>
       </div>
 
-      <div class="thank-you"> <strong>🌸 Thank You! 🌸</strong><br> We truly appreciate your support!<br> Stay connected for more exciting collections.<br> <strong>Team FLAPPY</strong> </div>
+      <div class="thank-you"> <strong>${brand.emoji} Thank You! ${brand.emoji}</strong><br> We truly appreciate your support!<br> Stay connected for more exciting collections.<br> <strong>${brand.teamName}</strong> </div>
     </div>
   `;
 
