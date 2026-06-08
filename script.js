@@ -390,6 +390,17 @@ function updateInvoice() {
 });
 
 // Initialize brand select and invoice
+function initBrandToggle() {
+  const radios = document.querySelectorAll('input[name="brand"]');
+  radios.forEach(r => {
+    r.removeEventListener('change', onBrandChange);
+    r.addEventListener('change', onBrandChange);
+  });
+}
+
+function onBrandChange(e) { setBrand(e.target.value); }
+
+initBrandToggle();
 setBrand(currentBrand);
 
 /* ================= PDF ================= */
