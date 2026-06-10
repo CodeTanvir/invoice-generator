@@ -292,14 +292,15 @@ textarea {
     0 6px 20px rgba(0, 0, 0, 0.06);
 }
 .invoice-preview {
-  page-break-after: always;
+  page-break-after: auto;
   break-after: page;
   border: 5px solid #6cb7035b;
 }
 
 /* last one should not add extra blank page */
 .invoice-preview:last-child {
-  page-break-after: auto;
+  page-break-after: auto !important;
+  break-after: auto !important;
 }
 .invoice-actions {
   position: sticky;
@@ -308,8 +309,8 @@ textarea {
   display: flex;
   gap: 1rem;
 
-  width: 100%; /* FULL WIDTH */
-  background: #ece2e2c6; /* covers entire wrapper */
+  width: 100%;
+  /* background: #ece2e2c6; */
 
   padding: 1rem 1.5rem; /* ← THIS creates left/right space */
   box-sizing: border-box;
@@ -513,93 +514,33 @@ textarea {
   color: #222;
 }
 
-@media (max-width: 900px) {
-  .container {
-    flex-direction: column;
-    padding-right: 0; /* remove extra space */
-  }
-
-  #invoiceWrapper {
-    position: relative; /* no longer fixed */
-    width: 100%; /* full width */
-    height: auto; /* adjust height automatically */
-    background: transparent; /* optional for clean look */
-    margin-top: 20px; /* space between panel and invoice */
-    padding: 0;
-    box-shadow: none;
-  }
-
-  #invoiceScroll {
-    max-height: none; /* allow invoice to expand naturally */
-    overflow: visible;
-    padding-bottom: 20px;
-  }
-  .panel,
-  #invoiceWrapper {
-    width: 100%;
-    min-width: auto;
-  }
-}
-
-/* Animated snake-like moving gradient border with Green, Blue, Yellow */
-@keyframes rainbowShadow {
-  0% {
-    box-shadow:
-      0 0 10px #a9d0a96a,
-      inset 0 0 10px rgba(0, 255, 0, 0.2);
-  }
-  33% {
-    box-shadow:
-      0 0 10px #9d9dc7,
-      inset 0 0 10px rgba(0, 0, 255, 0.2);
-  }
-  66% {
-    box-shadow:
-      0 0 10px #d1d19885,
-      inset 0 0 10px rgba(255, 255, 0, 0.2);
-  }
-  100% {
-    box-shadow:
-      0 0 10px #50755076,
-      inset 0 0 10px rgba(0, 255, 0, 0.2);
-  }
-}
-
-.invoice-preview.editing {
-  border: 3px solid;
-  border-image: linear-gradient(90deg, #3f603f, #b0b0f1, #ffff0059, #74ac7480) 1;
-  border-radius: 12px;
-  animation: rainbowShadow 4s linear infinite;
-}
-
-/* Responsive for devices */
-
-.form-row {
-  display: flex;
-  gap: 2rem;
-  width: 100%;
-}
-
-.form-row > div {
-  flex: 1;
-}
-
-/* mobile */
-/* FORCE MOBILE FIX */
+/* =========================
+   FIXED RESPONSIVE MODE
+   ONLY MOBILE OVERRIDES
+========================= */
 
 @media screen and (max-width: 900px) {
   html,
   body {
     width: 100%;
+    max-width: 100%;
     overflow-x: hidden;
   }
 
   .container {
-    flex-direction: column;
-
     width: 100%;
 
-    padding: 10px;
+    max-width: 100%;
+
+    padding: 10px !important;
+
+    margin: 0;
+
+    flex-direction: column;
+
+    gap: 20px;
+
+    box-sizing: border-box;
   }
 
   .panel {
@@ -607,42 +548,74 @@ textarea {
 
     min-width: 0;
 
+    box-sizing: border-box;
+
     padding: 15px;
+  }
+  .form-row {
+    flex-direction: column;
+    display: block;
   }
 
   #invoiceWrapper {
     width: 100%;
 
-    min-width: 0;
+    max-width: 100%;
+
+    min-width: 0 !important;
 
     height: auto;
 
     position: relative;
 
     margin-top: 20px;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+    background: transparent;
+
+    box-shadow: none;
   }
 
   #invoiceScroll {
+    width: 100%;
+
     overflow: visible;
+
+    padding: 0;
   }
 
-  /* preview keeps desktop structure */
+  #invoiceHistory {
+    width: 100%;
 
-  /* .invoice-preview {
-    width: 100% !important;
+    max-width: 100%;
 
-    padding: 8px !important;
-  } */
-
-  .invoice-preview .invoice-container {
-    width: 100% !important;
-
-    font-size: 12px;
+    overflow: hidden;
   }
 
-  /* logo left */
+  .invoice-preview {
+    width: 100% !important;
 
-  .invoice-preview .invoice-header {
+    max-width: 100%;
+
+    margin: 15px auto;
+
+    padding: 10px !important;
+
+    box-sizing: border-box;
+  }
+
+  .invoice-container {
+    width: 100% !important;
+
+    max-width: 100%;
+
+    box-sizing: border-box;
+  }
+
+  .invoice-header {
     display: flex !important;
 
     flex-direction: row !important;
@@ -650,35 +623,53 @@ textarea {
     justify-content: space-between;
 
     align-items: center;
+
+    width: 100%;
   }
 
-  .invoice-preview .logo-area {
-    flex: 0 0 90px;
+  .logo-area {
+    flex: 0 0 100px;
 
-    height: 55px;
+    width: 100px;
+
+    height: 60px;
+
+    padding: 5px;
   }
 
-  .invoice-preview .invoice-title {
-    font-size: 22px;
+  .invoice-title {
+    font-size: 22px !important;
   }
 
-  .invoice-preview .parties {
+  .parties {
     display: flex !important;
 
     flex-direction: row !important;
 
+    justify-content: space-between;
+
     padding: 10px !important;
 
+    width: 100%;
+
+    box-sizing: border-box;
+
+    font-size: 12px;
+  }
+
+  .invoice table {
+    width: 100% !important;
+
     font-size: 11px;
+
+    table-layout: fixed;
   }
 
-  .invoice-preview table {
-    font-size: 10px;
-  }
-
-  .invoice-preview th,
-  .invoice-preview td {
+  .invoice th,
+  .invoice td {
     padding: 5px !important;
+
+    word-break: break-word;
   }
 
   input,
@@ -695,113 +686,24 @@ textarea {
   .invoice-actions {
     flex-direction: column;
   }
+
+  /* hide desktop notification on phone */
+
+  .mobile-notice {
+    display: none !important;
+  }
 }
-/* ================= PDF EXPORT FORCE DESKTOP ================= */
 
 /* =========================
-   MOBILE PREVIEW ONLY
+   PDF EXPORT KEEP SAME
 ========================= */
-
-@media screen and (max-width: 1020px) {
-  #invoiceHistory {
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .invoice-preview {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 10px;
-  }
-
-  .invoice-container {
-    width: 100%;
-    transform: none;
-  }
-
-  .invoice-header {
-    flex-direction: row !important;
-  }
-
-  .logo-area {
-    flex: 0 0 100px;
-    height: 60px;
-  }
-
-  .invoice-title {
-    font-size: 22px;
-  }
-
-  .parties {
-    flex-direction: row;
-    padding: 10px;
-  }
-
-  .invoice table {
-    font-size: 11px;
-  }
-
-  .invoice th,
-  .invoice td {
-    padding: 6px;
-  }
-}
-
-@media screen and (max-width: 900px) {
-  #invoiceHistory {
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .invoice-preview {
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-
-  .invoice-preview .invoice-container {
-    width: 100%;
-  }
-
-  .invoice-preview .invoice-header {
-    display: flex;
-    flex-direction: row !important;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .invoice-preview .logo-area {
-    flex: 0 0 110px;
-    height: 70px;
-  }
-
-  .invoice-preview .invoice-title {
-    font-size: 26px;
-  }
-
-  .invoice-preview .parties {
-    display: flex;
-    flex-direction: row !important;
-
-    padding: 15px;
-
-    font-size: 12px;
-  }
-
-  .invoice-preview table {
-    font-size: 12px;
-  }
-
-  .invoice-preview th,
-  .invoice-preview td {
-    padding: 7px;
-  }
-}
-/* ================= PDF EXPORT ================= */
 
 .pdf-export {
   width: 730px !important;
+
   min-height: 1123px !important;
+
+  overflow: hidden;
 
   padding: 25px !important;
 
@@ -814,8 +716,6 @@ textarea {
   font-size: 16px !important;
 }
 
-/* remove mobile rules */
-
 .pdf-export .invoice-container {
   width: 100% !important;
 }
@@ -826,26 +726,12 @@ textarea {
   flex-direction: row !important;
 
   justify-content: space-between !important;
-
-  align-items: center !important;
 }
 
 .pdf-export .logo-area {
   width: 180px !important;
 
   height: 100px !important;
-
-  flex: none !important;
-}
-
-.pdf-export .logo {
-  max-width: 100% !important;
-
-  max-height: 100% !important;
-}
-
-.pdf-export .invoice-title {
-  font-size: 36px !important;
 }
 
 .pdf-export .parties {
@@ -856,35 +742,37 @@ textarea {
   justify-content: space-between !important;
 
   padding: 32px !important;
-
-  font-size: 16px !important;
 }
 
 .pdf-export table {
   width: 100% !important;
-
-  font-size: 16px !important;
 }
 
-.pdf-export th,
-.pdf-export td {
-  padding: 10px !important;
+.pdf-export .invoice-preview {
+  page-break-after: always;
+
+  break-after: page;
 }
 
-.pdf-export .thank-you {
-  margin-top: 100px !important;
+.pdf-export .invoice-preview:last-of-type {
+  page-break-after: auto !important;
 
-  font-size: 16px !important;
+  break-after: auto !important;
 }
 
-/* Notification */
+/* =========================
+   NOTICE
+========================= */
 
 .mobile-notice {
   position: fixed;
+
   top: 20px;
-  left: 20px;
+
+  right: 20px;
 
   background: rgba(255, 255, 255, 0.9);
+
   backdrop-filter: blur(12px);
 
   padding: 16px 45px 16px 20px;
@@ -894,6 +782,7 @@ textarea {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 
   font-family: "Inter", sans-serif;
+
   font-size: 14px;
 
   z-index: 9999;
@@ -905,30 +794,28 @@ textarea {
   position: absolute;
 
   right: 12px;
+
   top: 8px;
 
   border: none;
+
   background: none;
 
   font-size: 22px;
 
   cursor: pointer;
-
-  color: #555;
-}
-
-.mobile-notice.hide {
-  animation: slideOut 0.4s ease forwards;
 }
 
 @keyframes slideIn {
   from {
     transform: translateY(-30px);
+
     opacity: 0;
   }
 
   to {
     transform: translateY(0);
+
     opacity: 1;
   }
 }
@@ -936,6 +823,17 @@ textarea {
 @keyframes slideOut {
   to {
     transform: translateY(-30px);
+
     opacity: 0;
+  }
+}
+
+.mobile-notice.hide {
+  animation: slideOut 0.4s ease forwards;
+}
+
+@media screen and (max-width: 900px) {
+  .mobile-notice {
+    display: none !important;
   }
 }

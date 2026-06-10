@@ -394,7 +394,7 @@ console.log(clone)
    wrapper.style.position = "absolute";
   wrapper.style.left = "0";
   wrapper.style.top = "0";
-  wrapper.style.width = 627 + "px";
+  // wrapper.style.width = 627 + "px";
   wrapper.style.background = "white";
   wrapper.style.zIndex = "-1";
 
@@ -403,6 +403,26 @@ console.log(clone)
   // clone.style.width = invoice.offsetWidth + "px";
   clone.style.height = "auto"
 clone.classList.add("pdf-export")
+
+  const previews = clone.querySelectorAll(".invoice-preview");
+
+  previews.forEach((item,index)=>{
+
+    if(index === previews.length - 1){
+
+      item.style.pageBreakAfter = "auto";
+      item.style.breakAfter = "auto";
+
+    }else{
+
+      item.style.pageBreakAfter = "always";
+      item.style.breakAfter = "page";
+
+    }
+
+  });
+
+
 
   wrapper.appendChild(clone);
   document.body.appendChild(wrapper);
@@ -461,11 +481,11 @@ clone.classList.add("pdf-export")
   .then(()=>{
 
     wrapper.remove();
-// localStorage.removeItem('pdfBook');
+localStorage.removeItem('pdfBook');
     showToast('Pdf downloaded successfull',)
      setTimeout(()=>{
-      //  window.location.reload()
-    },3000)
+       window.location.reload()
+    },2000)
     showToast("PDF downloaded successfully");
 
   })
@@ -776,7 +796,7 @@ savedNumber.style.cssText = `
   border-radius: 20px;
   font-size: 14px;
   font-weight: 600;
-  z-index: 9999;
+  z-index: 1;
 `;
 document.body.appendChild(savedNumber);
 
