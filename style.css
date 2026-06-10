@@ -571,3 +571,84 @@ textarea {
   border-radius: 12px;
   animation: rainbowShadow 4s linear infinite;
 }
+
+/* Responsive for devices */
+
+.form-row {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+}
+
+.form-row > div {
+  flex: 1;
+}
+
+/* mobile */
+/* FORCE MOBILE FIX */
+@media screen and (max-width: 900px) {
+  html,
+  body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .panel {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+
+  #invoiceWrapper {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    height: auto;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  #invoiceScroll {
+    width: 100%;
+    overflow: visible;
+  }
+
+  .invoice {
+    width: 90%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .invoice-header {
+    flex-direction: column;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .invoice-actions {
+    flex-direction: column;
+  }
+}

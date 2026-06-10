@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Flappy Fashion Invoice Generator</title>
     <link rel="stylesheet" href="style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -77,7 +78,7 @@
           required
           placeholder="311 west kandapara Narsingdi 1600"
         ></textarea>
-        <div style="display: flex; gap: 2rem">
+        <div class="form-row">
           <div>
             <label>Advance (TK)</label>
             <input id="advance" type="number" value="0" min="0" />
@@ -90,6 +91,9 @@
         <h3>Items</h3>
         <div id="itemsListContainer"></div>
         <button class="btn btn-add" onclick="openModal()">+ Add Item</button>
+        <button id="savePdfBtn" class="btn btn-generate" onclick="savePDF()">
+          Save Pdf
+        </button>
         <button
           id="cancelEditBtn"
           class="btn btn-cancel"
@@ -113,9 +117,6 @@
           ></div>
         </div>
         <div class="invoice-actions">
-          <button id="savePdfBtn" class="btn btn-generate" onclick="savePDF()">
-            Save Pdf
-          </button>
           <button class="btn btn-add" onclick="downloadPDF()">
             Download PDF
           </button>
