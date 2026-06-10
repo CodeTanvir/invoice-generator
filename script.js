@@ -373,79 +373,12 @@ initBrandToggle();
 
 /* ================= DOWNLOAD PDF ================= */
 
-// function downloadPDF() {
-//   const savedData = JSON.parse(localStorage.getItem('pdfBook') || '[]');
-
-//   if (!savedData || !savedData.length) {
-//     showToast('No saved Invoices to Download', false);
-//     return;
-//   }
-
-
-//   const temp = document.createElement('div');
-//   temp.style.cssText = 'background:#fff;padding:10px;position:fixed;left:-9999px;top:0;';
-// savedData.forEach((d, idx) => {
-//     const pv = renderInvoicePreview(d, idx);
-//     pv.style.pageBreakAfter = 'always';
-//     temp.appendChild(pv);
-// });
-
-//   document.body.appendChild(temp);
-
-//   html2pdf().from(temp).set({
-//     margin: [15, 10, 15, 10],
-//     filename: Date.now(),
-//     image: { type: 'jpeg', quality: 0.98 },
-//     html2canvas: { scale: 2, useCORS: true },
-//     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-//   }).save().then(() => {
-//     document.body.removeChild(temp);
-//     localStorage.removeItem('pdfBook');
-//     showToast('PDF downloaded successfully');
-//     setTimeout(() => window.location.reload(), 1200);
-//   }).catch(err => {
-//     document.body.removeChild(temp);
-//     console.error(err);
-//     showToast('PDF download failed — check console', false);
-//   });
-// }
-
-
-
-// function downloadPDF() {
-//   const savedData = JSON.parse(localStorage.getItem('pdfBook'));
-//   console.log(savedData)
-//   if(savedData){
-//   updateInvoice();
-//   const data = collectData();
-//   const element = document.getElementById('invoiceHistory');
-//   element.querySelectorAll('button').forEach(btn => btn.remove());
-// console.log(data)
-// console.log(element)
-//   html2pdf().from(element).set({
-//     margin: [15, 10, 15, 10],
-//     filename: Date.now(),
-//     image: { type: 'jpeg', quality: 0.98 },
-//     html2canvas: { scale: 2, useCORS: true },
-//     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-//   }).save().then(()=>{
-//     localStorage.removeItem('pdfBook');
-//     showToast('Pdf downloaded successfull',)
-//     setTimeout(()=>{
-//        window.location.reload()
-//     },3000)
-   
-//   })
-// }else{
-//   showToast('No saved Invoices to Download')
-// }
-// }
 
 
 function downloadPDF() {
 
   const invoice = document.getElementById("invoiceHistory");
-
+  invoice.querySelectorAll('button').forEach(btn => btn.remove());
   if (!invoice) {
     showToast("Invoice not found", false);
     return;
@@ -455,21 +388,21 @@ function downloadPDF() {
   // Clone exact invoice design
   const clone = invoice.cloneNode(true);
 
-
+console.log(clone)
   const wrapper = document.createElement("div");
 
-  wrapper.style.position = "absolute";
+   wrapper.style.position = "absolute";
   wrapper.style.left = "0";
   wrapper.style.top = "0";
-  wrapper.style.width = invoice.offsetWidth + "px";
+  wrapper.style.width = 627 + "px";
   wrapper.style.background = "white";
   wrapper.style.zIndex = "-1";
 
 
   // keep original size/design
-  clone.style.width = invoice.offsetWidth + "px";
-  clone.style.height = "auto";
-
+  // clone.style.width = invoice.offsetWidth + "px";
+  clone.style.height = "auto"
+clone.classList.add("pdf-export")
 
   wrapper.appendChild(clone);
   document.body.appendChild(wrapper);
@@ -498,7 +431,7 @@ function downloadPDF() {
 
       backgroundColor:"#ffffff",
 
-      scrollX:0,
+      scrollX:1,
 
       scrollY:0,
 
@@ -528,10 +461,10 @@ function downloadPDF() {
   .then(()=>{
 
     wrapper.remove();
-localStorage.removeItem('pdfBook');
+// localStorage.removeItem('pdfBook');
     showToast('Pdf downloaded successfull',)
      setTimeout(()=>{
-       window.location.reload()
+      //  window.location.reload()
     },3000)
     showToast("PDF downloaded successfully");
 
@@ -549,10 +482,6 @@ localStorage.removeItem('pdfBook');
   });
 
 }
-
-
-
-
 
 
 
@@ -859,4 +788,45 @@ if (Alldata.length > 0) {
 } else {
   invoiceHistoryEl.style.display = 'none';
   invoiceHistoryEl.innerHTML = ''; // Clear if no invoices
+}
+
+
+
+
+
+
+
+
+//Notification 
+
+window.addEventListener("load",()=>{
+
+  const notice = document.getElementById("mobileNotice");
+
+  setTimeout(()=>{
+
+    if(notice){
+      closeNotice();
+    }
+
+  },30000);
+
+
+});
+
+
+function closeNotice(){
+
+ const notice=document.getElementById("mobileNotice");
+
+ if(notice){
+
+   notice.classList.add("hide");
+
+   setTimeout(()=>{
+      notice.remove();
+   },400);
+
+ }
+
 }
