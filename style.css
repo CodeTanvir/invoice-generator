@@ -702,7 +702,7 @@ textarea {
    MOBILE PREVIEW ONLY
 ========================= */
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1020px) {
   #invoiceHistory {
     width: 100%;
     overflow: hidden;
