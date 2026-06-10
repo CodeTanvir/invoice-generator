@@ -625,8 +625,8 @@ textarea {
   }
 
   .invoice {
-    width: 90%;
-    max-width: 100%;
+    /* width: 90%; */
+    width: 100%;
     box-sizing: border-box;
   }
 
@@ -652,3 +652,53 @@ textarea {
     flex-direction: column;
   }
 }
+/* PDF FIX */
+@media print {
+  body {
+    background: white !important;
+  }
+
+  .container {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .panel,
+  .invoice-actions,
+  footer {
+    display: none !important;
+  }
+
+  #invoiceWrapper {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    background: white !important;
+    box-shadow: none !important;
+  }
+
+  #invoiceScroll {
+    overflow: visible !important;
+    width: 100% !important;
+  }
+
+  .invoice {
+    width: 794px !important; /* A4 width */
+    max-width: none !important;
+    margin: auto !important;
+  }
+}
+/* PDF export fix */
+
+/* .pdf-export-fix {
+  width: 794px !important;
+  min-width: 794px !important;
+  max-width: 794px !important;
+}
+
+@media (max-width: 900px) {
+  #invoice {
+    transform: none !important;
+  }
+} */

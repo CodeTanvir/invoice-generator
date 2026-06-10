@@ -412,38 +412,143 @@ initBrandToggle();
 
 
 
+// function downloadPDF() {
+//   const savedData = JSON.parse(localStorage.getItem('pdfBook'));
+//   console.log(savedData)
+//   if(savedData){
+//   updateInvoice();
+//   const data = collectData();
+//   const element = document.getElementById('invoiceHistory');
+//   element.querySelectorAll('button').forEach(btn => btn.remove());
+// console.log(data)
+// console.log(element)
+//   html2pdf().from(element).set({
+//     margin: [15, 10, 15, 10],
+//     filename: Date.now(),
+//     image: { type: 'jpeg', quality: 0.98 },
+//     html2canvas: { scale: 2, useCORS: true },
+//     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+//   }).save().then(()=>{
+//     localStorage.removeItem('pdfBook');
+//     showToast('Pdf downloaded successfull',)
+//     setTimeout(()=>{
+//        window.location.reload()
+//     },3000)
+   
+//   })
+// }else{
+//   showToast('No saved Invoices to Download')
+// }
+// }
+
+
 function downloadPDF() {
-  const savedData = JSON.parse(localStorage.getItem('pdfBook'));
-  console.log(savedData)
-  if(savedData){
-  updateInvoice();
-  const data = collectData();
-  const element = document.getElementById('invoiceHistory');
-  element.querySelectorAll('button').forEach(btn => btn.remove());
-console.log(data)
-console.log(element)
-  html2pdf().from(element).set({
-    margin: [15, 10, 15, 10],
-    filename: Date.now(),
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-  }).save().then(()=>{
-    localStorage.removeItem('pdfBook');
+
+  const invoice = document.getElementById("invoiceHistory");
+
+  if (!invoice) {
+    showToast("Invoice not found", false);
+    return;
+  }
+
+
+  // Clone exact invoice design
+  const clone = invoice.cloneNode(true);
+
+
+  const wrapper = document.createElement("div");
+
+  wrapper.style.position = "absolute";
+  wrapper.style.left = "0";
+  wrapper.style.top = "0";
+  wrapper.style.width = invoice.offsetWidth + "px";
+  wrapper.style.background = "white";
+  wrapper.style.zIndex = "-1";
+
+
+  // keep original size/design
+  clone.style.width = invoice.offsetWidth + "px";
+  clone.style.height = "auto";
+
+
+  wrapper.appendChild(clone);
+  document.body.appendChild(wrapper);
+
+
+
+  html2pdf()
+
+  .set({
+
+    margin:[10,10,10,10],
+
+    filename:"invoice.pdf",
+
+    image:{
+      type:"jpeg",
+      quality:1
+    },
+
+
+    html2canvas:{
+
+      scale:2,
+
+      useCORS:true,
+
+      backgroundColor:"#ffffff",
+
+      scrollX:0,
+
+      scrollY:0,
+
+      windowWidth: document.documentElement.scrollWidth
+
+    },
+
+
+    jsPDF:{
+
+      unit:"mm",
+
+      format:"a4",
+
+      orientation:"portrait"
+
+    }
+
+  })
+
+
+  .from(clone)
+
+  .save()
+
+
+  .then(()=>{
+
+    wrapper.remove();
+localStorage.removeItem('pdfBook');
     showToast('Pdf downloaded successfull',)
-    setTimeout(()=>{
+     setTimeout(()=>{
        window.location.reload()
     },3000)
-   
+    showToast("PDF downloaded successfully");
+
   })
-}else{
-  showToast('No saved Invoices to Download')
+
+
+  .catch(err=>{
+
+    console.error(err);
+
+    wrapper.remove();
+
+    showToast("PDF failed",false);
+
+  });
+
 }
-}
-
-
-
-
 
 
 
