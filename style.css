@@ -705,7 +705,7 @@ textarea {
 
   overflow: hidden;
 
-  padding: 25px !important;
+  padding: 15px !important;
 
   background: white !important;
 
@@ -729,9 +729,9 @@ textarea {
 }
 
 .pdf-export .logo-area {
-  width: 200px !important;
+  width: 220px !important;
 
-  height: 120px !important;
+  height: 180px !important;
 }
 
 .pdf-export .parties {
@@ -741,7 +741,7 @@ textarea {
 
   justify-content: space-between !important;
 
-  padding: 25px !important;
+  padding: 20px !important;
 }
 
 .pdf-export table {
