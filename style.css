@@ -701,7 +701,7 @@ textarea {
 .pdf-export {
   width: 730px !important;
 
-  min-height: 1223px !important;
+  min-height: 1323px !important;
 
   overflow: hidden;
 
@@ -713,7 +713,7 @@ textarea {
 
   font-family: "Inter", sans-serif !important;
 
-  font-size: 20px !important;
+  font-size: 25px !important;
 }
 
 .pdf-export .invoice-container {
@@ -729,9 +729,9 @@ textarea {
 }
 
 .pdf-export .logo-area {
-  width: 180px !important;
+  width: 200px !important;
 
-  height: 100px !important;
+  height: 120px !important;
 }
 
 .pdf-export .parties {
@@ -741,7 +741,7 @@ textarea {
 
   justify-content: space-between !important;
 
-  padding: 32px !important;
+  padding: 25px !important;
 }
 
 .pdf-export table {
