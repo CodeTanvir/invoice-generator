@@ -701,7 +701,7 @@ textarea {
 .pdf-export {
   width: 730px !important;
 
-  min-height: 1123px !important;
+  min-height: 1223px !important;
 
   overflow: hidden;
 
@@ -713,7 +713,7 @@ textarea {
 
   font-family: "Inter", sans-serif !important;
 
-  font-size: 16px !important;
+  font-size: 20px !important;
 }
 
 .pdf-export .invoice-container {
